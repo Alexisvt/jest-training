@@ -13,8 +13,11 @@ describe('App', () => {
     const followersLink = await screen.findByText(/Followers/);
     const leftClick = { button: 0 };
     userEvent.click(followersLink, leftClick);
+    const followerItems = await screen.findAllByTestId(/follower-item-/i);
+    const followersHeader = screen.getByRole('heading', { name: /Followers/ })
 
-    expect(await screen.findByRole('heading', { name: /Followers/ })).toBeInTheDocument();
+    expect(followerItems).toHaveLength(5);
+    expect(followersHeader).toBeInTheDocument();
   })
 
   test('should redirect to Home page when clicked the link and update the DOM', async () => {
@@ -26,7 +29,8 @@ describe('App', () => {
     const homeLink = await screen.findByText(/Go Back/);
     const leftClick = { button: 0 };
     userEvent.click(homeLink, leftClick);
+    const todoHeader = screen.getByRole('heading', { name: /Todo/ })
 
-    expect(await screen.findByRole('heading', { name: /Todo/ })).toBeInTheDocument();
+    expect(todoHeader).toBeInTheDocument();
   })
 })
