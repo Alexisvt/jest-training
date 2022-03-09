@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
-import { fakeResponse } from './test_elements';
+import { fakeResponse } from './testUtils';
 
 export const handlers = [
   rest.get(`https://randomuser.me/api/`, (req, res, ctx) => {
