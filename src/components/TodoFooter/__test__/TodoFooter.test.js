@@ -1,16 +1,7 @@
 import { screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 
 import { renderWithRouter } from '../../../utils/testUtils';
 import TodoFooter from '../TodoFooter';
-
-const MockTodoFooter = (props) => {
-  return (
-    <BrowserRouter>
-      <TodoFooter {...props} />
-    </BrowserRouter>
-  )
-}
 
 
 describe('TodoFooter', () => {
