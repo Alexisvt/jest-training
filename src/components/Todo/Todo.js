@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
-import AddInput from '../AddInput/AddInput'
-import Header from '../Header/Header'
-import TodoList from '../TodoList/TodoList'
-import "./Todo.css"
+import './Todo.css';
+
+import React, { useState } from 'react';
+
+import AddInput from '../AddInput/AddInput';
+import Header from '../Header/Header';
+import TodoList from '../TodoList/TodoList';
 
 function Todo() {
 
@@ -11,11 +13,11 @@ function Todo() {
     return (
         <div className="todo">
             <Header title="Todo" />
-            <AddInput 
+            <AddInput
                 setTodos={setTodos}
                 todos={todos}
             />
-            <TodoList 
+            <TodoList
                 todos={todos}
                 setTodos={setTodos}
             />

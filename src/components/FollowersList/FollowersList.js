@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import "./FollowersList.css"
-import axios from "axios"
+import './FollowersList.css';
+
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function FollowersList() {
@@ -8,20 +9,37 @@ export default function FollowersList() {
     const [followers, setFollowers] = useState([]);
 
     useEffect(() => {
-        fetchFollowers()
+        const controller = new AbortController();
+
+        const fetchFollowers = async () => {
+            try {
+                const { data } = await axios.get("https://randomuser.me/api/?results=5", {
+                    signal: controller.signal
+                })
+
+                setFollowers(data.results);
+            } catch (error) {
+                if (axios.isCancel(error)) {
+                    console.log('Request canceled! message:', error.message);
+                }
+            }
+        }
+
+        fetchFollowers();
+
+        return () => {
+            controller.abort();
+        }
     }, []);
 
-    const fetchFollowers = async () => {
-        const {data} = await axios.get("https://randomuser.me/api/?results=5")
-        setFollowers(data.results)
-    }
 
     return (
         <div className="followerslist-container">
             <div>
-                {followers.map(follower => (
-                    <div className="follower-item">
-                        <img src={follower.picture.large}/>
+                {!followers.length && <p>No followers found.</p>}
+                {followers.map((follower, index) => (
+                    <div data-testid={`follower-item-${index}`} className="follower-item" key={follower.login.uuid}>
+                        <img alt={`${follower.name.first} profile`} src={follower.picture.large} />
                         <div className="followers-details">
                             <div className="follower-item-name">
                                 <h4>{follower.name.first}</h4> <h4>{follower.name.last}</h4>
