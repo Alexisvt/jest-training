@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
 
+import { renderWithRouter } from '../../../utils/testUtils';
 import TodoList from '../TodoList';
 
 const MockTodoList = ({ initialValue = [], mockStateUpdater = null }) => {
@@ -9,22 +9,19 @@ const MockTodoList = ({ initialValue = [], mockStateUpdater = null }) => {
   const setTodos = mockStateUpdater;
 
   return (
-
-    <BrowserRouter>
-      <TodoList todos={todos} setTodos={setTodos} />
-    </BrowserRouter>
+    <TodoList todos={todos} setTodos={setTodos} />
   )
 }
 
 describe('TodoList', () => {
   test('should display a todo', () => {
-    render(<MockTodoList initialValue={[{ id: 1, task: 'test', completed: false }]} />)
+    renderWithRouter(<MockTodoList initialValue={[{ id: 1, task: 'test', completed: false }]} />)
 
     expect(screen.getByText('test')).toBeInTheDocument()
   })
 
   test('tasks should not have "todo-item-active" class initially', () => {
-    render(<MockTodoList initialValue={[{ id: 1, task: 'test', completed: false }]} />)
+    renderWithRouter(<MockTodoList initialValue={[{ id: 1, task: 'test', completed: false }]} />)
 
     const todoItemElement = screen.getByText('test')
 
@@ -32,7 +29,7 @@ describe('TodoList', () => {
   })
 
   test('should show "todo-item-active" class when task is completed', () => {
-    render(<MockTodoList initialValue={[{ id: 1, task: 'test', completed: true }]} />)
+    renderWithRouter(<MockTodoList initialValue={[{ id: 1, task: 'test', completed: true }]} />)
 
     const todoItemElement = screen.getByText('test')
 
@@ -41,7 +38,7 @@ describe('TodoList', () => {
 
   test('should change uncompleted task status to complete when clicked', () => {
     const mockFn = jest.fn();
-    render(<MockTodoList initialValue={[{ id: 1, task: 'test', completed: false }]} mockStateUpdater={mockFn} />)
+    renderWithRouter(<MockTodoList initialValue={[{ id: 1, task: 'test', completed: false }]} mockStateUpdater={mockFn} />)
 
     const todoItemElement = screen.getByText('test')
     userEvent.click(todoItemElement);
