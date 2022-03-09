@@ -1,6 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
+import { renderWithRouter } from '../../../utils/testUtils';
 import TodoFooter from '../TodoFooter';
 
 const MockTodoFooter = (props) => {
@@ -15,7 +16,7 @@ const MockTodoFooter = (props) => {
 describe('TodoFooter', () => {
   test('should render 2 tasks text', () => {
     // Arrange
-    render(<MockTodoFooter numberOfIncompleteTasks={2} />)
+    renderWithRouter(<TodoFooter numberOfIncompleteTasks={2} />)
 
     // Act
     const footer = screen.getByText(/2 tasks left/i);
@@ -26,7 +27,7 @@ describe('TodoFooter', () => {
 
   test('should render 1 task text', () => {
     // Arrange
-    render(<MockTodoFooter numberOfIncompleteTasks={1} />)
+    renderWithRouter(<TodoFooter numberOfIncompleteTasks={1} />)
 
     // Act
     const footer = screen.getByText(/1 task left/i);

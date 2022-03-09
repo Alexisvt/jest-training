@@ -1,17 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
 
+import { renderWithRouter } from '../../../utils/testUtils';
 import Todo from '../Todo';
-
-const MockTodo = () => (<BrowserRouter>
-  <Todo />
-</BrowserRouter>)
 
 
 describe('Todo', () => {
   test('should display a header with a "todo" text content', () => {
-    render(<MockTodo />);
+    renderWithRouter(<Todo />);
 
     const header = screen.getByRole('heading');
 
@@ -20,7 +16,7 @@ describe('Todo', () => {
   })
 
   test('should add and display a todo', () => {
-    render(<MockTodo />);
+    renderWithRouter(<Todo />);
 
     const input = screen.getByRole('textbox');
     userEvent.type(input, 'new todo');
@@ -32,7 +28,7 @@ describe('Todo', () => {
   })
 
   test('should display "2 tasks left" when adding a new todo', () => {
-    render(<MockTodo />);
+    renderWithRouter(<Todo />);
 
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button')
@@ -49,7 +45,7 @@ describe('Todo', () => {
   })
 
   test('When click a task should have "todo-item-active" class', () => {
-    render(<MockTodo />);
+    renderWithRouter(<Todo />);
 
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button', { name: 'Add' });

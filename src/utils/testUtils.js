@@ -1,3 +1,5 @@
+import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 
 export const fakeResponse = {
   "results": [
@@ -288,4 +290,10 @@ export const fakeResponse = {
     "page": 1,
     "version": "1.3"
   }
+}
+
+export const renderWithRouter = (ui, { route = '/' } = {}) => {
+  window.history.pushState({}, 'Test page', route)
+
+  return render(ui, { wrapper: BrowserRouter })
 }
